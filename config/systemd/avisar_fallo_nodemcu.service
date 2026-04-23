@@ -1,0 +1,6 @@
+[Unit]
+Description=Aviso Telegram fallo escuchar_nodemcu
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /home/usuario/sistema_seguridad/enviar_telegram.sh "ALERTA: el servicio escuchar_nodemcu.service ha fallado en el sistema de seguridad."

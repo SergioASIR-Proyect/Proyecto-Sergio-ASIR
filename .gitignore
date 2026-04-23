@@ -1,0 +1,10 @@
+.config.env
+config.env
+bbdd.php
+web/bbdd.php
+config/web/bbdd.php
+videos/
+backups_seguridad/
+*.log
+__pycache__/
+*.pyc

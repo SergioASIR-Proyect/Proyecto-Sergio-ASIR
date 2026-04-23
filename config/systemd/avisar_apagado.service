@@ -1,0 +1,12 @@
+[Unit]
+Description=Aviso Telegram al apagar el sistema
+DefaultDependencies=no
+Before=shutdown.target reboot.target halt.target poweroff.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/usuario/sistema_seguridad/avisar_apagado.sh
+TimeoutStartSec=10
+
+[Install]
+WantedBy=halt.target reboot.target poweroff.target shutdown.target

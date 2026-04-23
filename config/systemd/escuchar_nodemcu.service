@@ -1,0 +1,16 @@
+[Unit]
+Description=Servicio escucha NodeMCU sistema seguridad
+After=network.target
+
+[Service]
+User=usuario
+WorkingDirectory=/home/usuario/sistema_seguridad
+ExecStart=/usr/bin/python3 /home/usuario/sistema_seguridad/escuchar_nodemcu.py
+
+Restart=always
+RestartSec=5
+
+ExecStopPost=/bin/bash /home/usuario/sistema_seguridad/enviar_telegram.sh "ALERTA escuchar_nodemcu.service se ha detenido ⚠️"
+
+[Install]
+WantedBy=multi-user.target

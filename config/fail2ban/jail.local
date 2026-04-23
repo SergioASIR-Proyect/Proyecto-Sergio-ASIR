@@ -1,0 +1,25 @@
+[DEFAULT]
+
+bantime = 1800
+findtime = 600
+maxretry = 5
+
+# bloquear con firewall ufw
+banaction = ufw
+
+[sshd]
+
+enabled = true
+port = 22
+logpath = /var/log/auth.log
+action = ufw
+         telegram
+
+[login-seguridad]
+
+enabled = true
+port = http,https
+filter = login_seguridad
+logpath = /var/log/login_seguridad.log
+action = ufw
+         telegram
