@@ -8,3 +8,5 @@ backups_seguridad/
 *.log
 __pycache__/
 *.pyc
+movil.conf
+*.sql

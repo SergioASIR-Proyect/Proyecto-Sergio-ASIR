@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /home/usuario/sistema_seguridad/.config.env
+source /var/www/config/.config.env
 
 MENSAJE="$1"
 

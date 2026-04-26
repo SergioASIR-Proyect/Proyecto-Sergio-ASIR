@@ -41,7 +41,7 @@ try {
     $resultado_estado = mysqli_query($conexion, $sql_estado);
     $estado = mysqli_fetch_array($resultado_estado, MYSQLI_ASSOC);
 
-    $estado_servicio = trim(shell_exec("systemctl is-active escuchar_nodemcu.service"));
+    $estado_servicio = trim(shell_exec("pgrep -f escuchar_nodemcu.py"));
 
 } catch (Exception $e) {
     echo "Error: ".$e->getMessage();
@@ -178,7 +178,7 @@ try {
 
             <div class="estado-servicio">
                 <?php
-                    if ($estado_servicio == "active") {
+                    if ($estado_servicio != "") {
                         echo "<span class='circulo verde'></span>";
                         echo "<span>Servicio activo</span>";
                     } else {

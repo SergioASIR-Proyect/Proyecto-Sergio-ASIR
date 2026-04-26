@@ -7,7 +7,7 @@ import logging
 
 PUERTO = "/dev/ttyUSB0"
 BAUDIOS = 9600
-URL = "http://localhost/seguridad/alerta.php?token=CLAVE123&tipo_evento=APERTURA_PUERTA"
+URL = "http://localhost/alerta.php?token=CLAVE123&tipo_evento=APERTURA_PUERTA"
 
 # Configuración del log
 logging.basicConfig(
@@ -63,7 +63,7 @@ while True:
                         logging.info("Lanzando grabación para evento %s", id_evento)
 
                         subprocess.Popen(
-                            ["/home/usuario/sistema_seguridad/grabar.sh", id_evento]
+                            ["/app/grabar.sh", id_evento]
                         )
 
                     elif "ALARMA_DESACTIVADA" in texto:

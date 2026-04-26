@@ -1,12 +1,12 @@
 #!/bin/bash
 
-source .config.env
+source /var/www/config/.config.env
 
 ID_EVENTO=$1
 
-CARPETA="/var/www/html/seguridad/videos"
+CARPETA="/var/www/html/videos"
 FECHA=$(date +"%Y%m%d_%H%M%S")
-ARCHIVO="grabacion_$ID_EVENTO_$FECHA.mp4"
+ARCHIVO="grabacion_${ID_EVENTO}_${FECHA}.mp4"
 
 RUTA_COMPLETA="$CARPETA/$ARCHIVO"
 RUTA_BD="videos/$ARCHIVO"
@@ -26,7 +26,8 @@ ffmpeg -f v4l2 \
 -an \
 -y "$RUTA_COMPLETA"
 
-mysql -u "$MYSQL_USER" -p"$MYSQL_PASS" "$MYSQL_DB" <<EOF
+mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$MYSQL_PASS" "$MYSQL_DB" <<EOF
+
 INSERT INTO grabaciones (nombre, ruta, fecha_hora, id_evento)
 VALUES ('$ARCHIVO', '$RUTA_BD', NOW(), $ID_EVENTO);
 EOF

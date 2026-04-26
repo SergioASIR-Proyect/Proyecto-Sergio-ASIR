@@ -1,0 +1,86 @@
+services:
+  sistema:
+    build: .
+    container_name: sistema_seguridad
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    devices:
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
+      - "/dev/video0:/dev/video0"
+    volumes:
+      - /var/www/html/seguridad/videos:/var/www/html/videos
+      - /var/www/config/.config.env:/var/www/config/.config.env:ro
+      - /var/log/login_seguridad.log:/var/log/login_seguridad.log
+      - /etc/ssl/certs/seguridad.crt:/etc/ssl/certs/seguridad.crt:ro
+      - /etc/ssl/private/seguridad.key:/etc/ssl/private/seguridad.key:ro
+    environment:
+      - TZ=Europe/Madrid
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_seguridad
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: sistema_seguridad
+      MYSQL_USER: seguridad_user
+      MYSQL_PASSWORD: Usuario.25
+      TZ: Europe/Madrid
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_seguridad
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: rootpass
+    depends_on:
+      - mysql
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus_seguridad
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - cadvisor
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor
+    container_name: cadvisor_seguridad
+    restart: always
+    ports:
+      - "8082:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana_seguridad
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+volumes:
+  mysql_data:
+  grafana_data:

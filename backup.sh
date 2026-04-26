@@ -14,7 +14,7 @@ mkdir -p "$CARPETA_BACKUP"
 echo "$(date) - Iniciando backup del sistema" >> $LOG
 
 # Backup base de datos
-mysqldump --no-tablespaces -u "$MYSQL_USER" -p"$MYSQL_PASS" "$MYSQL_DB" > "$CARPETA_BACKUP/bbdd_$FECHA.sql"
+docker exec mysql_seguridad mysqldump --no-tablespaces -u "$MYSQL_USER" -p"$MYSQL_PASS" "$MYSQL_DB" > "$CARPETA_BACKUP/bbdd_$FECHA.sql"
 
 echo "$(date) - Backup base de datos creado: bbdd_$FECHA.sql" >> $LOG
 
