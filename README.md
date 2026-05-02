@@ -36,7 +36,11 @@ El sistema incluye grabación automática de vídeo, almacenamiento de eventos y
 ## 📁 Estructura del proyecto
 
 ```
-sistema_seguridad
+sistema_seguridad/
+│
+├── Dockerfile
+├── docker-compose.yml
+├── entrypoint.sh
 │
 ├── escuchar_nodemcu.py
 ├── grabar.sh
@@ -44,14 +48,29 @@ sistema_seguridad
 ├── limpieza_videos.sh
 ├── enviar_telegram.sh
 │
-├── web
-│   ├── acceso.php
-│   ├── dashboard.php
-│   ├── eventos.php
-│   └── login.php
+├── config/
+│   └── web/
+│       ├── acceso.php
+│       ├── alerta.php
+│       ├── bbdd.php
+│       ├── dashboard.php
+│       ├── eventos.php
+│       ├── login.php
+│       └── logout.php
 │
-└── hardware
-    └── nodemcu_codigo.ino
+├── docker/
+│   └── mysql/
+│       └── init/
+│           └── 01_init.sql
+│
+├── monitoring/
+│   └── prometheus/
+│       └── prometheus.yml
+│
+├── seguridad-http.conf
+├── seguridad-ssl.conf
+├── .gitignore
+└── README.md
 ```
 
 ---
